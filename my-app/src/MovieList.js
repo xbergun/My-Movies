@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function MovieList(props) {
-    console.log(props)
     //varsayılan olarak event nesnesi getirir.
     // const handleClick = (event) =>{
     //     console.log(event)

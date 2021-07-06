@@ -4,14 +4,14 @@ import './App.css';
 class App extends React.Component{
 
   state = {
-    sadsad
+    durum: false
   }
 
 
   render(){
     return (
       <div >
-        <h1>My Movies</h1>
+        <h1 >My Movies</h1>
       </div>
     );
   }

@@ -18,7 +18,7 @@ export default class SearchBar extends Component {
 
         <div className="mt-3">
         <form className="form-inline my-2 my-lg-0 " onSubmit={this.handleFormSubmit}>
-      <input onChange={(e) =>this.setState({searchQuery: e.target.value})} value={this.state.searchQuery} className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"/> 
+      <input onChange={this.props.searchMovieProp} className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"/> 
     </form>
         </div>
 

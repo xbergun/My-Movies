@@ -80,11 +80,15 @@ class App extends React.Component {
   };
 
   searchMovie = (event) =>{
-    const filterMovie = this.state.movie.filter((m)=>m.name !== event.name)
-    this.setState{{movies:filterMovie}}
+    this.setState({searchQuery: event.target.value})
   }
 
   render() {
+    //
+    let filteredMovies =this.state.movies.filter((movie) =>{
+      return movie.name.toLowerCase().indexOf(this.state.searchQuery.toLowerCase()) !== -1
+      //aradağımız kelime, eğer indexof un içinde varsa o return eder.
+    })
     return (
       <div className="container">
         <div className="row">
@@ -92,10 +96,17 @@ class App extends React.Component {
             <SearchBar searchMovieProp={this.searchMovie} />
           </div>
         </div>
-        <MovieList movies={this.state.movies} delete={this.deleteMovie} />
+        <MovieList movies={filteredMovies} delete={this.deleteMovie} />
       </div>
     );
   }
 }
 
 export default App;
+
+//16. video
+//ilk olarak SearchBarda ki onChange ile herhangi bir değişikliğe kısa yol yaptık. Searchdan çıkardık state durumunu.
+//App js propsu gönderiyor. Burda ki props ise this.searchMovie fonksiyonunu çalıştır.
+//searchmovie direkt event alıyor. O event İnput onChangeden geliyor.
+//girdiğimiz değeri görebiliyoruz target value ile. Onu statede ki boş searchquery e atıyoruz.
+//let filtered ile de yeni array oluşturup filtreledik.

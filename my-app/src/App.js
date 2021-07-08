@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import SearchBar from "./SearchBar";
 import MovieList from "./MovieList";
+import axios from 'axios'
 class App extends React.Component {
   //fetch, asenkron olarak network sorguları yapmamızı sağlayan fonksiyon
   //bize bir promise döner.
@@ -12,20 +13,59 @@ class App extends React.Component {
 //UI compları dom da yerini aldıktan sonra hemen çalışıyodu.
 //Dışarıdan http isteği yapıcaksak bu metodu kullanmalıyız.
   
- async  componentDidMount(){
-    const baseURL = "http://localhost:3000/movies"
-    const response = await fetch(baseURL)
-    //promise dönüyor. Bize json tabanlı bir dosya lazım
-    //fetch asenkron döndüğü için jsona çevirdiğimiz de hata veriyor.
-    // o yüzden fonksiyonumuzu asenkorn haline getirmemiz gerek.
-    //await ve async
-    console.log(response)
-    const data = await response.json();
-    console.log(data)
-    this.setState({movies : data})
+//  async  componentDidMount(){
+//     const baseURL = "http://localhost:3000/movies"
+//     const response = await fetch(baseURL)
+//     //promise dönüyor. Bize json tabanlı bir dosya lazım
+//     //fetch asenkron döndüğü için jsona çevirdiğimiz de hata veriyor.
+//     // o yüzden fonksiyonumuzu asenkorn haline getirmemiz gerek.
+//     //await ve async
+//     console.log(response)
+//     const data = await response.json();
+//     console.log(data)
+//     this.setState({movies : data})
+//   }
+
+//axios ile get ve delete request
+  async  componentDidMount(){
+    //fetch ile, responseyi json formatına çeviriyoduk. Axios direkt json formatında nesne döndürüyor.
+   const response = await axios.get("http://localhost:3000/movies")
+   this.setState({movies: response.data})
+  // console.log(response)
   }
 
-  deleteMovie = (movie) => {
+
+  // deleteMovie = (movie) => {
+  //   const newMovieList = this.state.movies.filter((m) => m.id !== movie.id);
+  //   this.setState({
+  //     movies: newMovieList,
+  //   });
+  //   //farklı bir patterni daha var.
+  //   this.setState((state) => ({
+  //     movies: newMovieList,
+  //   }));
+  // };
+  
+  //FETCH APİ İLE OLUŞTURULAN DELETE
+  // deleteMovie = async (movie) => {
+  //   const baseURL = `http://localhost:3000/movies/${movie.id}`
+  //   await fetch(baseURL, {
+  //     method:"DELETE"
+  //   })
+  //   const newMovieList = this.state.movies.filter((m) => m.id !== movie.id);
+  //   this.setState({
+  //     movies: newMovieList,
+  //   });
+  //   //farklı bir patterni daha var.
+  //   this.setState((state) => ({
+  //     movies: newMovieList,
+  //   }));
+  // };
+
+  //AXİOS APİ İLE OLUŞTURULAN DELETE
+  deleteMovie = async (movie) => {
+    axios.delete(`http://localhost:3000/movies/${movie.id}`)
+
     const newMovieList = this.state.movies.filter((m) => m.id !== movie.id);
     this.setState({
       movies: newMovieList,
@@ -67,3 +107,9 @@ export default App;
 //searchmovie direkt event alıyor. O event İnput onChangeden geliyor.
 //girdiğimiz değeri görebiliyoruz target value ile. Onu statede ki boş searchquery e atıyoruz.
 //let filtered ile de yeni array oluşturup filtreledik.
+
+
+//19
+//senkron, aynı anda çalışabilen, asenkron da aynı anda çalışamayan
+//responsu alana kadar bekle diyoruz. Ondan sonra ypaıcaksın o işi.
+//awaitten sonra get diyoruz o isteği alana kadar bekle. Alınca aşağıdaki koda geç anlamında.

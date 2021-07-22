@@ -22,9 +22,9 @@ class App extends React.Component {
     //fetch ile, responseyi json formatına çeviriyoduk. Axios direkt json formatında nesne döndürüyor.
    //const response = await axios.get(`https://api.themoviedb.org/3/list/7102272?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`) GERÇEK APİDEN ALDIĞIMIZ
 
-   const response = await axios.get(`272?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
+   const response = await axios.get("http://localhost:3000/movies")
    console.log(response.data.items)
-  this.setState({movies: response.data.items})
+  this.setState({movies: response.data})
   }
 
 
@@ -50,7 +50,7 @@ class App extends React.Component {
   render() {
     //
     let filteredMovies =this.state.movies.filter((movie) =>{
-      return movie.title.toLowerCase().indexOf(this.state.searchQuery.toLowerCase()) !== -1
+      return movie.name.toLowerCase().indexOf(this.state.searchQuery.toLowerCase()) !== -1
       //aradağımız kelime, eğer indexof un içinde varsa o return eder.
     })
     return (
